@@ -1,95 +1,120 @@
-/* 1. Use a more-intuitive box-sizing model */
+/* ------------------------------ */
+/* 1. CSS RESET & GLOBAL DEFAULTS */
+/* ------------------------------ */
+
+/* Box-sizing: border-box everywhere */
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
-/* 2. Remove default margin */
+/* Remove default margin */
 * {
   margin: 0;
 }
 
-/* 3. Enable keyword animations */
+/* Smooth keyword animations */
 @media (prefers-reduced-motion: no-preference) {
   html {
     interpolate-size: allow-keywords;
   }
 }
 
+/* Base typography & smoothing */
 body {
-  /* 4. Add accessible line-height */
   line-height: 1.5;
-  /* 5. Improve text rendering */
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  min-height: 100vh;
 }
 
-/* 6. Improve media defaults */
+/* Media defaults */
 img, picture, video, canvas, svg {
   display: block;
   max-width: 100%;
 }
 
-/* 7. Inherit fonts for form controls */
+/* Inherit fonts for form elements */
 input, button, textarea, select {
   font: inherit;
 }
 
-/* 8. Avoid text overflows */
+/* Text wrapping */
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
+p { text-wrap: pretty; }
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
 
-/* 9. Improve line wrapping */
-p {
-  text-wrap: pretty;
-}
-h1, h2, h3, h4, h5, h6 {
-  text-wrap: balance;
-}
-
-/*
-  10. Create a root stacking context
-*/
+/* Root stacking context */
 #root, #__next {
   isolation: isolate;
 }
 
+/* Color Variables */
 :root {
   --color1: #1fc3cc;
   --color2: #136d75;
   --color3: #0b4e54;
 }
 
-body {
-    display: flex;
-}
 
-.sign-up-wrapper {
-    width: 2500px;
-    text-align: center;
-}
-
+/* ------------------------------ */
+/* 2. LAYOUT STRUCTURE (2-COLUMN) */
+/* ------------------------------ */
 
 .image-wrapper {
   position: relative;
+  flex: 2;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  flex-grow: 1;
 }
 
+.sign-up-wrapper {
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-up-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 2em;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  width: 100%;
+}
+
+.sign-up-topper {
+  margin-bottom: 20px;
+  margin-left: 120px;
+}
+
+.sign-up-footer > p {
+  margin-top: 1em;
+  margin-left: 120px;
+}
+
+
+
+/* ------------------------------ */
+/* 3. IMAGE SIDE (LEFT)           */
+/* ------------------------------ */
 
 .card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  position: relative;
 }
+
 .img-banner {
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 50%; transform: translateY(-50%);
+  top: 40%;
+  transform: translateY(-60%);
   width: 100%;
   background: rgba(0, 0, 0, 0.6);
   color: white;
@@ -106,7 +131,6 @@ body {
   margin: 8px;
 }
 
-
 .img-footer {
   position: absolute;
   bottom: 0;
@@ -120,10 +144,16 @@ body {
   font-family: "Josefin Sans", sans-serif;
 }
 
+.img-footer > a,
 a {
   text-decoration: none;
-  color: cyan;
+  color: var(--color1);
 }
+
+
+/* ------------------------------ */
+/* 4. FORM ELEMENTS               */
+/* ------------------------------ */
 
 .form-row {
   margin-bottom: 40px;
@@ -133,8 +163,14 @@ a {
   flex-wrap: wrap;
 }
 
+.form-row label {
+  margin-bottom: 15px;
+}
+
 .form-row input[type='text'],
-.form-row input[type='email'] {
+.form-row input[type='email'],
+.form-row input[type="tel"],
+.form-row input[type="password"] {
   background-color: #FFFFFF;
   border: 1px solid #D6D9DC;
   border-radius: 3px;
@@ -143,62 +179,63 @@ a {
   font-size: 14px;
 }
 
-.form-row label {
-  margin-bottom: 15px;
-}
-
-@media only screen and (min-width: 700px) {
-  .speaker-form-header,
-  .speaker-form ,
-  .form-row input[type='email'],    /* Add */
-  .form-row select,                 /* These */
-  .form-row textarea {
-    width: 600px;
-  }
-  .form-row {
-    flex-direction: row;
-    align-items: flex-start; /* To avoid stretching */
-    margin-bottom: 20px;
-  }
-  .form-row input[type='text'] {
-    width: 250px;
-    height: initial;
-  }
-  .form-row label {
-    text-align: right;
-    width: 120px;
-    margin-top: 7px;
-    padding-right: 20px;
-  }
-  .form-row button {
-    margin-left: 120px;
-  }
-}
-
 .form-row input[type='text']:invalid,
-.form-row input[type='email']:invalid {
+.form-row input[type='email']:invalid,
+.form-row input[type="tel"]:invalid,
+.form-row input[type="password"]:invalid {
   border: 1px solid #D55C5F;
   color: #D55C5F;
-  box-shadow: none; /* Remove default red glow in Firefox */
+  box-shadow: none;
 }
-.form-row button {
+
+/* Buttons */
+button {
   font-size: 16px;
   font-weight: bold;
-
   color: #FFFFFF;
   background-color: var(--color1);
-
   border: none;
   border-radius: 3px;
-
   padding: 10px 40px;
   cursor: pointer;
 }
 
-.form-row button:hover {
+button:hover {
   background-color: var(--color2);
 }
 
-.form-row button:active {
+button:active {
   background-color: var(--color3);
+}
+
+
+/* ------------------------------ */
+/* 5. MEDIA QUERIES               */
+/* ------------------------------ */
+
+@media only screen and (min-width: 700px) {
+  .form-row {
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 20px 0;
+  }
+
+  .form-row input[type='text'],
+  .form-row input[type="tel"],
+  .form-row input[type='email'],
+  .form-row input[type="password"] {
+    width: 250px;
+    height: initial;
+  }
+
+  .form-row label {
+    text-align: right;
+    width: 200px;
+    margin-top: 7px;
+    padding-right: 20px;
+  }
+
+  button {
+    margin-left: 120px;
+  }
 }
